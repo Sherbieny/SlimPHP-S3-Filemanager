@@ -1,0 +1,25 @@
+{% macro renderFolderTree(folders, parent=0) %}
+<ul class="{% if parent != 0 %}collapse{% endif %} list-group list-group-flush" id="folder-{{ parent }}">
+    {% for folderName, folderData in folders %}
+        <li class="list-group-item">
+            <button class="folder btn btn-icon" type="button" data-bs-toggle="collapse" data-bs-target="#folder-{{ folderData.id }}" aria-expanded="false" data-path="{{ folderData.path}}" aria-controls="folder-{{ folderData.id }}">
+                <i class="fa-solid fa-folder"></i> {{ folderName }}
+            </button>
+            {% if folderData.children is defined and folderData.children|length > 0 %}
+                {{ _self.renderFolderTree(folderData.children, folderData.id) }}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% endmacro %}
+
+{% import _self as macros %}
+
+
+<div class="folder-tree">
+    {% if error is same as(false) %}
+            {{ macros.renderFolderTree(folders) }}
+    {% else %}
+            <p>An error had occured</p>
+    {% endif %}
+</div>

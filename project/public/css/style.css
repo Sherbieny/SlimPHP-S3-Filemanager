@@ -1,0 +1,31 @@
+.max-vh-75 {
+    max-height: 75vh;
+}
+
+.folder.active > i {
+    color: #FFD43B;
+}
+
+.file {
+    margin: 10px;
+}
+
+.file img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+}
+
+#sidebar-loading-spinner {
+    position: absolute;
+    top: 2%;
+    right: 7%;
+    z-index: 1000;
+}
+
+#main-loading-spinner{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1000;
+}

@@ -1,0 +1,33 @@
+# AWS S3 Filemanager Project
+# Version: 1.0
+# Author: Eslam Sherbieny
+# Tech: Docker, Slim PHP 4, AWS S3 SDK, Bootstrap 5
+
+networks:
+  s3-filemanager-network:
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: s3-filemanager-nginx
+    ports:
+      - "3000:80"
+    volumes:
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./project:/var/www/html
+    depends_on:
+      - php8.2-fpm
+    networks:
+      - s3-filemanager-network
+    command: ["nginx", "-g", "daemon off;"]
+
+  php8.2-fpm:
+    build:
+      context: ./config/php
+      dockerfile: Dockerfile
+    container_name: s3-filemanager-php8.2-fpm
+    volumes:
+      - ./config/php/php.ini:/usr/local/etc/php/php.ini
+      - ./project:/var/www/html
+    networks:
+      - s3-filemanager-network

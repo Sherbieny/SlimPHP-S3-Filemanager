@@ -1,0 +1,25 @@
+<div class="file-list d-flex flex-wrap" id="files-list">
+    {% if (files is defined and files is empty) or error is same as(true) %}
+        <ul>
+            <li>Click on a folder to expand/collapse</li>
+            <li>Double click on a folder to get files</li>
+            <li>Drag files around to rearrange them and click on save to save the new sort order</li>
+            <li>Click on Upload File to upload new file into the currently opened folder</li>
+            <li>Click on Create Folder to create a new folder inside the currently opened folder</li>
+            <li>Click on Save to save the new sort order of files</li>
+            <li>Click on Delete Folder to delete the currently opened folder and all it's files</li>
+            <li>Click on trash icon of a file to delete a file</li>
+        </ul>
+    {% endif %}
+
+    
+    {% if files is defined and files is not empty %}
+        {% for file in files %}
+            <div class="file sortable-elem" data-path="{{ file.path }}" data-sort="{{ file.sort_order }}">
+                {{ renderFileContent(file)|raw }}
+                <p><i class="fa-solid fa-trash delete-file-btn"></i> {{ file.url|filename }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+</div>
